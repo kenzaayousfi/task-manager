@@ -1,0 +1,97 @@
+header("Location: ./test.php"); // je redirige vers la page test.php
+
+
+include_once './menu.php';  // on va inclure le fichier menu 
+
+différece entre include et include_once: 
+  - include on peut l'inclure plusieurs et le fichier (par exemple menu.php) sera afficher plusieurs fois
+  - include_once on peut l'inclure plusieurs et le fichier (par exemple menu.php) sera afficher UNE SEULE FOIS.
+
+
+  
+************************************ BASE DE DONNEES ************************************
+
+ALTER TABLE `etudiants` ADD `adresse` VARCHAR(200) NOT NULL AFTER `date_de_naissance`;
+Créer une table "users" dans la base de données "jsk"
+  CREATE TABLE 
+  jsk.users 
+  (
+    id INT NOT NULL AUTO_INCREMENT , 
+    nom VARCHAR(100) NOT NULL , 
+    prenom VARCHAR(100) NOT NULL , 
+    PRIMARY KEY (id)) ENGINE = InnoDB;
+
+//////////////////////////////////////////
+ajoute un utilisateur : 
+INSERT INTO users (id, nom, prenom) VALUES (NULL, 'yassa', 'ferroudja');
+
+//////////////////////////////////////////
+afficher les users :
+
+SELECT * FROM users; // afficher tous les users (et tous leurs champs parce que * ) 
+SELECT nom,prenom FROM users; // afficher le nom et prénom des user
+SELECT * FROM users WHERE prenom="ferroudja" and nom="yassa";
+SELECT count(*) as nombre FROM users WHERE  nom="yassa"; // nombre de personne  qui ont le nom ="yassa"
+
+/////////////////////////////////////// ORDRE
+SELECT * FROM users ORDER by id DESC; // afficher par ordre decroissant 
+SELECT * FROM users ORDER by id ASC; // afficher par ordre croissant 
+
+//////////////////////////////////////Recherche :
+
+SELECT * FROM users WHERE nom LIKE "%yas%"; // recherche les users qui ont dans le nom "yas"
+
+
+
+////////////////////////////////////Editer un user :
+
+UPDATE users SET nom = 'yassa1', prenom = 'Ferroudja2' WHERE id = 1;
+
+///////////////////////////////////////supprimer un utilisateur :
+DELETE FROM users WHERE id = 2
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+notre application comporte plusieurs pages
+page d'inscription accessible si l'utilisateur n'est pas connecté
+ - formulaire simple en post qui nous permet de créer un utilisateur avec un id_utilisateur unique
+page connexion accessible aussi seulement quand l'utilisateur n'est pas connecté 
+- formulaire qui nous permet de récupérer les informations de l'utilisateur s'il existe
+- on crée une variable session id_utilisateur qui va nous servir sur toutes les pages pour savoir
+si un utilisateur est connecté ou non.
+
+page dashboard : accessible quand l'utilisateur est connecté
+ - on affiche seulement le nombre de taches totales/faites/en cours/ ou terminées
+
+page profile: 
+- on affiche les informations de l'utilisateur avec une possibilité 
+    -- de modifier ses informations
+    -- modifier son mot de passe
+    -- supprimer son compte et les taches liées à son compte
+
+page tache: nous permet:
+  -- d'ajouter une tache
+  -- modifier une tache
+  --supprimer une tache
+
+page liste de taches: (la plus importante)
+nous permet :
+ - afficher toutes les taches
+ - trier par date ou id_tache ou statut
+ - filtrer par statut
+ - recherche une taches par mot clé (dans le titre ou dans la description)
+ - afficher une alerte si on tache arrive à sa date limite(24h) et qu'elle n'est pas en statut terminée
+  ou qu'elle a dépassé sa date limite
+
+on a le menu : qui s'affiche sur toutes pages
+ - quand l'utilisateur n'est pas connecté on affiche seulement le lien "connexion" et "inscription"
+ - quand l'utilisateur est connecté on cache ces deux liens et on affiche le reste
+
+- button déconnexion: 
+  -- nous permets de déconnecter l'utilisateur (en supprimant la session)
+
+
+
+
+
+  on a aussi validé chaque page sur w3c (css + html)
